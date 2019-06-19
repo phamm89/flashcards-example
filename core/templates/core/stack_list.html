@@ -1,0 +1,12 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+    <h1>Card stacks</h1>
+    <ul>
+        {% for stack in stacks %}
+        <a href="{% url 'stack-detail' stack.pk %}">
+            <li>{{stack.name}}</li>
+        </a>
+        {% endfor %}
+    </ul>
+{% endblock %}
