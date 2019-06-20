@@ -1,10 +1,19 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from core.models import Stack
+from core.forms import StackForm
 
 # Create your views here.
 def stack_list(request):
+    if request.method == "POST":
+        form = StackForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(to='stack-list')
+        else:
+            form = StackForm()
+ 
     stacks = Stack.objects.all()
-    return render(request, 'core/stack_list.html', {"stacks": stacks})
+    return render(request, 'core/stack_list.html', {"stacks": stacks, "form": form})
 
 def stack_detail(request, stack_pk):
     """
